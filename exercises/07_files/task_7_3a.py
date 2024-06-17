@@ -23,6 +23,7 @@
 Підказка: Для сортування зручно спочатку створити список списків такого типу, а
 потім сортувати (зверніть увагу на те, що VLAN число).
 
+
 [[100, '01bb.c580.7000', 'Gi0/1'],
  [200, '0a4b.c380.7c00', 'Gi0/2'],
  [300, 'a2ab.c5a0.700e', 'Gi0/3'],
@@ -37,3 +38,22 @@
 однаковий, то з другого. Так працює за замовчуванням функція sorted та метод
 sort, якщо сортувати перелік списків вище.
 """
+
+file_1 = 'CAM_table.txt'
+with open(file_1) as f:
+    lista = []
+    for line in f:
+        if "DYNAMIC" in line:
+            lista.append(line.replace('DYNAMIC',"").rstrip())
+new_list = []
+for i in lista:
+        new_list.append (i.strip(' ').split())
+
+for i in new_list:
+    i[0] = int(i[0])
+
+new_list.sort()
+# for i in new_list:
+    # print (f"{i[0]:<10} {i[1]:20} {i[2]}")
+for vlan, mac, intf in new_list:
+    print (f"{vlan:<10} {mac:20} {intf[2]}")

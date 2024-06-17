@@ -35,3 +35,17 @@ Out[10]:
  ('10.0.19.1', '255.255.255.0')]
 
 """
+import re
+file_1 = 'config_r1.txt'
+# regex_int = r"(interface +(\S+))"
+regex_ip = r"ip address +(\S+) +(\S+)"
+def get_ip_from_cfg (file):
+    lists = []
+    with open(file) as f:
+        for line in f:
+
+            m2 = re.search(regex_ip, line)
+            if m2:
+                lists.append(m2.groups())
+    return lists
+print (get_ip_from_cfg(file_1))

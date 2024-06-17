@@ -39,3 +39,34 @@ Out[13]:
  ('Loopback0', '10.2.2.2', 'up', 'up')]
 
 """
+import re
+from rich.traceback import install
+install(show_locals=True, extra_lines=5)
+
+def parse_sh_ip_int_br (file):
+    lists = []
+    regex = r"(?P<intf>\S+) +(?P<ip>\S+) +\S+ +\S+ +(?P<status>up|down|administratively down) +(?P<prot>\S+)"
+    with open(file) as f:
+        for line in f:
+            m2 = re.search(regex, line)
+            if m2:
+                lists.append(m2.groups())
+        return lists
+
+    return 0
+
+
+def parse_sh_ip_int_br_new (file):
+    lists = []
+    regex = r"(?P<intf>\S+) +(?P<ip>\S+) +\S+ +\S+ +(?P<status>up|down|administratively down) +(?P<prot>\S+)"
+    with open(file) as f:
+        all_file = f.read()
+    m=re.finditer(regex, all_file)
+    for line_match in m:
+        lists.append(line_match.groups())
+    return lists
+
+    return 0
+
+print (parse_sh_ip_int_br("sh_ip_int_br_2.txt"))
+print (parse_sh_ip_int_br_new("sh_ip_int_br_2.txt"))
