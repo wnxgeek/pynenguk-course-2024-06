@@ -43,7 +43,6 @@ def get_ip_from_cfg (file):
     lists = []
     with open(file) as f:
         for line in f:
-
             m2 = re.search(regex_ip, line)
             if m2:
                 lists.append(m2.groups())
