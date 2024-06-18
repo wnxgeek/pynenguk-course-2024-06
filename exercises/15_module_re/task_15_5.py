@@ -23,7 +23,7 @@ description Connected to SW1 port Eth 0/1
 значення - команда, яка задає опис інтерфейсу:
 'Eth 0/0': 'description Connected to SW1 port Eth 0/1'
 
-Перевірити роботу функції на файлі sh_cdp_n_sw1.txt. Приклад виклику функції
+Перевірити роботу функції на файлі c. Приклад виклику функції
 
 In [17]: generate_description_from_cdp("sh_cdp_n_sw1.txt")
 Out[17]:
@@ -33,3 +33,18 @@ Out[17]:
  'Eth 0/5': 'description Connected to R6 port Eth 0/1'}
 
 """
+import re
+from pprint import pprint
+def generate_description_from_cdp (file):
+    intdict = {}
+    regex = re.compile(r'(?P<DevId>\S+) +(?P<LocalInt>Eth.\S+) +\S+ +\S \S \S +\S+ +(?P<PotID>\S+ \S+)')
+    with open(file) as f:
+        all_file = f.read()
+    m=regex.findall(all_file)
+    # print (m)
+    for i in m:
+        intdict[i[1]] = 'description Connected to ' + i[0] + ' port '+i[2]
+
+    return intdict
+
+pprint (generate_description_from_cdp("sh_cdp_n_sw1.txt"))
