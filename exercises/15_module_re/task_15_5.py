@@ -42,8 +42,10 @@ def generate_description_from_cdp (file):
         all_file = f.read()
     m=regex.findall(all_file)
     # print (m)
-    for i in m:
-        intdict[i[1]] = 'description Connected to ' + i[0] + ' port '+i[2]
+    # for i in m:
+    #     intdict[i[1]] = 'description Connected to ' + i[0] + ' port '+i[2]
+    for devid, localint, portid  in m:
+        intdict[localint] = 'description Connected to ' + devid + ' port '+portid
 
     return intdict
 
