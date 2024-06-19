@@ -23,3 +23,11 @@ print(m.groups())
 print(m.groupdict())
 
 print (m.group("ip"))
+
+
+dev = {
+    "name": "alex",
+    "age": 20
+}
+
+print (*dev)
