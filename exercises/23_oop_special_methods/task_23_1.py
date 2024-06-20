@@ -44,3 +44,40 @@ In [6]: ip1 = IPAddress('10.1.1.1/240')
 ValueError: Incorrect mask
 
 """
+class IPAddress:
+    def __init__(self, ipmask):
+        self.ipmask = ipmask
+        self.ip = self._div(ipmask)[0]
+        self.mask = self._div(ipmask)[1]
+
+    def _check_ip (self,ipadd):
+        add = ipadd.split(".")
+        if len(add) != 4:
+            raise ValueError("invalid length")
+        flag = 0
+        for octet in add:
+            # print (octet)
+            if 0 <= int(octet) <=255:
+                flag += 1
+                #print (f"{flag} - {octet}",)
+                if flag == 4:
+                    return ipadd
+            else:
+                raise ValueError("invalid ip")
+    def _check_mask (self, mask):
+        if 8 <= int(mask) <=32:
+            return int(mask)
+        else:
+            raise ValueError("invalid mask")
+    def _div (self, ipmask):
+        x = []
+        x = ipmask.split("/")
+        ip = self._check_ip(x[0])
+        mask = self._check_mask(x[1])
+        return ip,mask
+
+ip1 = IPAddress("6.33.33.7/23")
+
+
+
+print (f"address {ip1}: ip {ip1.ipmask}: ipadd {ip1.ip}: ip {ip1.mask}")
