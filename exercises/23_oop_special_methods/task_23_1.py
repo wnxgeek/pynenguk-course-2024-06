@@ -44,6 +44,10 @@ In [6]: ip1 = IPAddress('10.1.1.1/240')
 ValueError: Incorrect mask
 
 """
+import logging
+
+
+
 class IPAddress:
     def __init__(self, ipmask):
         self.ipmask = ipmask
@@ -74,10 +78,18 @@ class IPAddress:
         x = ipmask.split("/")
         ip = self._check_ip(x[0])
         mask = self._check_mask(x[1])
+        logging.info("ip, mask are ready")
         return ip,mask
 
-ip1 = IPAddress("6.33.33.7/23")
+logging.basicConfig(
+    #filename = 'file.log'
+    level=logging.DEBUG,
+    style="{",
+    format='{asctime} {name} {levelname:20} {funcName} {message}'
+)
 
+ip1 = IPAddress("6.33.33.7/23")
+logging.info('complete')
 
 
 print (f"address {ip1}: ip {ip1.ipmask}: ipadd {ip1.ip}: ip {ip1.mask}")

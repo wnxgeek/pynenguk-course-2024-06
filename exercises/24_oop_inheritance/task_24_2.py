@@ -28,6 +28,15 @@ devices.yaml. Якщо параметри підключення до прист
 """
 from netmiko.cisco.cisco_ios import CiscoIosSSH
 
+from netmiko.cisco.cisco_ios import CiscoIosSSH
+
+
+class MyNetmiko(CiscoIosSSH):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        #super().enable()
+        self.enable()
+
 
 device_params = {
     "device_type": "cisco_ios",
@@ -36,3 +45,6 @@ device_params = {
     "password": "cisco",
     "secret": "cisco",
 }
+r1 = MyNetmiko(**device_params)
+
+print(r1.find_prompt())
